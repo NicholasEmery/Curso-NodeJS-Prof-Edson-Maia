@@ -3,7 +3,7 @@ import mysql from "mysql";
 const conexao = mysql.createConnection({
   host: "localhost",
   port: "3306",
-  usar: "root",
+  user: "root",
   password: "root",
   database: "bdcopa",
 });
