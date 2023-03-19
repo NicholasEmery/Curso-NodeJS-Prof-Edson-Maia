@@ -41,7 +41,7 @@ app.post("/selecoes", (req, res) => {
 app.delete("/selecoes/:id", (req, res) => {
   let index = buscarIndexSelecao(req.params.id);
   selecoes.splice(index, 1);
-  res.send(`Seleção com o id ${req.params.id} excluida com suceeso`);
+  res.send(`Seleção com o id ${req.params.id} excluida com sucesso`);
 });
 
 app.put("/selecoes/:id", (req, res) => {
