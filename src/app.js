@@ -6,19 +6,24 @@ const app = express();
 app.use(express.json());
 
 function buscarSelecaoPorId(id) {
-  return selecoes.filter( selecao => selecao.id == id);
+  return selecoes.filter((selecao) => selecao.id == id);
 }
 
 function buscarIndexSelecao(id) {
-  return selecoes.findIndex( selecao => selecao.id == id);
-};
+  return selecoes.findIndex((selecao) => selecao.id == id);
+}
 
-app.get("/", (req, res) => {
-  res.send("Curos de Node JS");
-});
-
+// ROTAS
 app.get("/selecoes", (req, res) => {
-  res.status(200).send(selecoes);
+  // res.status(200).send(selecoes);
+  const sql = "SELECT * FROM selecoes;";
+  conexao.query(sql, (erro, res) => {
+    if (erro) {
+      console.log(erro);
+    } else {
+      res.status(200).json(resultado);
+    }
+  });
 });
 
 app.get("/selecoes/:id", (req, res) => {
