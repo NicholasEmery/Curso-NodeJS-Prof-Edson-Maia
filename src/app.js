@@ -1,4 +1,5 @@
 import express from "express";
+import conexao from "../infra/conexao.js";
 
 const app = express();
 
@@ -15,11 +16,11 @@ function buscarIndexSelecao(id) {
 
 // ROTAS
 app.get("/selecoes", (req, res) => {
-  // res.status(200).send(selecoes);
   const sql = "SELECT * FROM selecoes;";
-  conexao.query(sql, (erro, res) => {
+  conexao.query(sql, (erro, resultado) => {
     if (erro) {
       console.log(erro);
+      res.status(500).json({ erro: "Erro ao buscar seleções" });
     } else {
       res.status(200).json(resultado);
     }
@@ -27,7 +28,18 @@ app.get("/selecoes", (req, res) => {
 });
 
 app.get("/selecoes/:id", (req, res) => {
-  res.json(buscarSelecaoPorId(req.params.id));
+  // res.json(buscarSelecaoPorId(req.params.id));
+  const id = req.params.id;
+  const sql = "SELECT * FROM selecoes WHERE id=?;";
+  conexao.query(sql, id, (erro, resultado) => {
+    const linha = resultado[0];
+    if (erro) {
+      console.log(erro);
+      res.status(500).json({ erro: erro });
+    } else {
+      res.status(200).json(linha);
+    }
+  });
 });
 
 app.post("/selecoes", (req, res) => {
